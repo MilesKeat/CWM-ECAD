@@ -33,5 +33,17 @@ module blinds(
     wire   out;
          
       //Todo: add you logic here
+	//out = func[[a b]]
+
+	 assign out = func[a*2+b];
+
+	//ab = a*2 + b
+	//out = func[ab]
+
+        //assign tab = a*2;
+        //assign tab = tab + b;
+        //assign out = func[tab:tab];
+	
+	
 
 endmodule
