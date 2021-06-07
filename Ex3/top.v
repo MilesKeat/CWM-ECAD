@@ -20,11 +20,24 @@
 
 module monitor (
     //Todo: add ports 
+	input rst,clk;
+	input on_off,change;
+	
 
+	output[7:0]counter_out;
     );
                     
     //Todo: add registers and wires, if needed
-
+	
     //Todo: add user logic
-      
+        always @ (posedge clk or posedge rst)
+	 if (rst)
+	  counter_out = 0;
+	 else
+		if (change)
+			if(on_off)
+			 assign counter_out = counter_out +1
+			else
+			 assign counter_out = counter_out -1
+	end 
 endmodule
