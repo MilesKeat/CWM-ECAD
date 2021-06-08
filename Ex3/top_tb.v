@@ -36,45 +36,52 @@ reg err;
 
 //Todo: User logic
 initial begin
+ err = 0;
  clk = 0;
- rst = 0;
- on_off = 0;
+ rst = 1;
+ on_off = 1;
  change = 0;
  counter_out = 0;
  counter_out_prev = counter_out;
 
+if (rst) begin
+ if (counter_out != 0) begin
+    $display("***TEST FAILED! did not reset correct ***");
+           err=1;
+ end
+end 
+rst = 0;
  forever begin
   #CLK_PERIOD
 
-  if (rst)
-  begin
-   if (counter_out != 0) 
-   begin 
-    $display("***TEST FAILED! did not reset correct ***");
-           err=1;
-    end
 
-  else if ((change) && (on_off)) && (counter_out != counter_out_prev + 1))
-  begin
+  if ((change)==1) begin
+  if ((on_off)==1) begin
+  if (counter_out != counter_out_prev + 1) begin
    $display("***TEST FAILED! did not add correct ***");
            err=1;
   end
+  end
+  end
   
-  else if (change) && (!on_off) && (counter_out != counter_out_prev - 1)
-  begin
+  if ((change)==1) begin
+  if ((on_off)==0) begin
+  if (counter_out != counter_out_prev - 1) begin
    $display("***TEST FAILED! did not subtract correct ***");
            err=1;
   end
-    
+  end
+  end
 
   counter_out_prev = counter_out;
   change=~change;
-  if change = 0
-   on_off =~ on_off;
-  if clk == 10
-   rst = 1;
-  if clk == 11
-   rst = 0;
+  if (on_off >= 4) begin
+   on_off = 0;
+  end 
+  if (on_off <= 2) begin
+   on_off = 1;
+  end
+
  end
 end
 
@@ -82,17 +89,19 @@ end
 
 initial begin 
  #50
- if err == 0
+ if (err == 0)begin
   $display("***TEST PASSED! :) ***");
+  end
  $finish;
 end
 
 //Todo: Instantiate counter module
  
-
-.clk (clk)
-.rst (rst)
-.on_off (on_off)
-.change (change)
-.counter_out (counter_out)
+monitor top (
+.clk (clk),
+.rst (rst),
+.on_off (on_off),
+.change (change),
+.counter_out (counter_out[7:0])
+);
 endmodule 

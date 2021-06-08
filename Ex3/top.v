@@ -33,13 +33,19 @@ module monitor (
 	
     reg [7:0]counter_out;
     //Todo: add user logic
-        always @ (posedge clk or posedge rst)
-	 if (rst)
+        always @ (posedge clk or posedge rst) begin
+	 if (rst) begin
 	  counter_out = 0;
-	 else
-		if (change)
-			if(on_off)
+	 end
+	 else begin
+		if (change) begin
+			if(on_off) begin
 			 assign counter_out = counter_out +1;
-			else
+			end
+			else begin
 			 assign counter_out = counter_out -1;
+			end
+		end
+	 end
+	end
 endmodule
