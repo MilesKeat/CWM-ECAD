@@ -21,7 +21,7 @@ reg clk;
 reg rst;
 reg on_off;
 reg change;
-reg [7:0]counter_out;
+wire [7:0]counter_out;
 reg [7:0]counter_out_prev;
 reg err;
 
@@ -41,8 +41,6 @@ initial begin
  rst = 1;
  on_off = 1;
  change = 0;
- counter_out = 0;
- counter_out_prev = counter_out;
 
 if (rst) begin
  if (counter_out != 0) begin
@@ -54,7 +52,7 @@ rst = 0;
  forever begin
   #CLK_PERIOD
 
-
+  
   if ((change)==1) begin
   if ((on_off)==1) begin
   if (counter_out != counter_out_prev + 1) begin
@@ -75,7 +73,7 @@ rst = 0;
 
   counter_out_prev = counter_out;
   change=~change;
-  if (on_off >= 4) begin
+  if (on_off >= 3) begin
    on_off = 0;
   end 
   if (on_off <= 2) begin
@@ -88,7 +86,7 @@ end
 //Todo: Finish test, check for success
 
 initial begin 
- #50
+ #200
  if (err == 0)begin
   $display("***TEST PASSED! :) ***");
   end
@@ -102,6 +100,6 @@ monitor top (
 .rst (rst),
 .on_off (on_off),
 .change (change),
-.counter_out (counter_out[7:0])
+.counter_out (counter_out)
 );
 endmodule 
