@@ -33,7 +33,6 @@ module monitor (
 	
     reg [7:0]counter_out;
     //Todo: add user logic
-	 counter_out <= 8'b00000000;
         always @ (posedge clk or posedge rst) begin
 	 if (rst) begin
 	   counter_out <= 8'b00000000;

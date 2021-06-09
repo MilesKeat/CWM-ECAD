@@ -41,6 +41,9 @@ initial begin
  rst = 1;
  on_off = 1;
  change = 0;
+ counter_out_prev = 0;
+
+#CLK_PERIOD
 
 if (rst) begin
  if (counter_out != 0) begin
@@ -73,10 +76,10 @@ rst = 0;
 
   counter_out_prev = counter_out;
   change=~change;
-  if (on_off >= 3) begin
+  if (counter_out >= 3) begin
    on_off = 0;
   end 
-  if (on_off <= 2) begin
+  if (counter_out <= 2) begin
    on_off = 1;
   end
 
