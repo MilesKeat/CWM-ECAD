@@ -32,7 +32,8 @@ colour = 0;
 enable = 1;
 forever begin
 #CLK_PERIOD
-if ((colour[0:0]<<8-colour[0:0]!=rgb[1:0]) || (colour[1:1]<<8-colour[1:1]!=rgb[3:2]) ||  (colour[2:2]<<8-colour[2:2]!=rgb[3:2])) begin 
+#CLK_PERIOD
+if (rgb != (colour[0:0]<<(8))-colour[0:0]+(colour[1:1]<<(16))-(colour[1:1]<<(8))+(colour[2:2]<<(24))-(colour[2:2]<<(16))) begin 
 $display("***TEST FAILED! did not subtract correct ***");
            err=1;
 end
