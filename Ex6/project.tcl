@@ -22,7 +22,7 @@ create_fileset -constrset -quiet constraints
 
 #Todo: add verilog modules here
 create_ip -name blk_mem_gen -vendor xilinx.com -library ip -version 8.4 -module_name mybram3
-set_property -dict [list CONFIG.Component_Name {mybram3} CONFIG.Write_Width_A {24} CONFIG.Write_Depth_A {8} CONFIG.Read_Width_A {24} CONFIG.Operating_Mode_A {WRITE_FIRST} CONFIG.Write_Width_B {24} CONFIG.Read_Width_B {24}] [get_ips mybram3]
+set_property -dict [list CONFIG.Component_Name {mybram3} CONFIG.Write_Width_A {24} CONFIG.Write_Depth_A {8} CONFIG.Read_Width_A {24} CONFIG.Operating_Mode_A {WRITE_FIRST} CONFIG.Write_Width_B {24} CONFIG.Read_Width_B {24} CONFIG.Load_Init_File {true} CONFIG.Coe_File {/home/centos/CWM-ECAD/Ex6/mem.coe}] [get_ips mybram3] 
 read_verilog "top.v"
 read_verilog "top_tb.v"
 

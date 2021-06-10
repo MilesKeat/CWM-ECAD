@@ -30,14 +30,12 @@ err = 0;
 clk = 0;
 colour = 0;
 enable = 1;
-
 forever begin
 #CLK_PERIOD
 if ((colour[0:0]<<8-colour[0:0]!=rgb[1:0]) || (colour[1:1]<<8-colour[1:1]!=rgb[3:2]) ||  (colour[2:2]<<8-colour[2:2]!=rgb[3:2])) begin 
 $display("***TEST FAILED! did not subtract correct ***");
            err=1;
 end
-enable =~ enable;
 if (enable == 1) begin
 colour = colour+1;
 end
