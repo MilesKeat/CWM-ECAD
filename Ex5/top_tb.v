@@ -13,12 +13,13 @@ module top_tb(
  parameter CLK_PERIOD = 10;
  reg clk;
  reg [4:0] temperature;
- reg [1:0]state;
- reg [1:0]state_prev;
  reg sett;
-wire heating;
-wire cooling;
-reg err;
+ wire heating;
+ wire cooling;
+ reg err;
+ reg heating_prev;
+ reg cooling_prev;
+
 
   initial
     begin
@@ -30,36 +31,32 @@ reg err;
 initial begin
 err = 0;
 clk = 0;
-state_prev = 00;
 temperature = 16;
-state = 00;
 sett = 1;
 #CLK_PERIOD
 sett = 0;
 forever begin
- state_prev = (heating<<1+cooling);
  #CLK_PERIOD
- state = (heating<<1+cooling);
- if ((temperature >= 22) && (state_prev == 2'b00)) begin 
- if (state != 2'b01)begin
+ if ((temperature >= 22) && (heating_prev ==  0 && cooling_prev == 0 )) begin 
+ if ((heating != 0) || (cooling!= 1))begin
  $display("***TEST FAILED! did not switch correct ***");
            err=1;
  end 
  end 
- if ((temperature >= 20) && (state_prev == 2'b10)) begin 
- if (state != 2'b00)begin
- $display("***TEST FAILED! did not switch correct ***");
-           err=1;
- end
- end 
- if ((temperature <= 18) && (state_prev == 2'b00)) begin 
- if (state != 2'b10)begin
+ if ((temperature >= 20) && (heating_prev ==  1 && cooling_prev == 0 )) begin 
+ if ((heating != 0) || (cooling!= 0))begin
  $display("***TEST FAILED! did not switch correct ***");
            err=1;
  end
  end 
- if ((temperature <=20) && (state_prev == 2'b01)) begin 
- if (state != 2'b00)begin
+ if ((temperature <= 18) && ((heating_prev ==  0 && cooling_prev == 0 ))) begin 
+ if ((heating != 1) || (cooling!= 0))begin
+ $display("***TEST FAILED! did not switch correct ***");
+           err=1;
+ end
+ end 
+ if ((temperature <=20) && (heating_prev ==  0 && cooling_prev == 1 )) begin 
+ if ((heating != 0) || (cooling!= 0))begin
  $display("***TEST FAILED! did not switch correct ***");
            err=1;
  end
@@ -72,6 +69,8 @@ forever begin
  else begin
  temperature = temperature - 6;
  end
+ heating_prev = heating;
+ cooling_prev = cooling;
  end 
  end
 

@@ -35,7 +35,6 @@ if (sett !=1) begin
 heating = 0;
 cooling = 0;
 end 
-
 state = (heating<<1+cooling);
 if (state == 2'b10) begin
 if (temperature >= 5'b10100) begin
