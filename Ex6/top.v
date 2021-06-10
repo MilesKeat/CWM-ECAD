@@ -14,4 +14,29 @@
 //           rgb [23:0]
 //
 //////////////////////////////////////////////////////////////////////////////////
+`timescale 1ns / 100ps
 
+module monitor (
+input clk,
+input [2:0]colour,
+input enable,
+
+
+
+output [23:0]rgb 
+);
+
+reg [23:0]rgb;
+wire [23:0]rgbw;
+mybram3 your_instance_name (
+  .clka(clk),    // input wire clka
+  .ena(enable),      // input wire ena
+  .wea(0),      // input wire [0 : 0] wea
+  .addra(colour),  // input wire [2 : 0] addra
+  .dina(24'b0),    // input wire [23 : 0] dina
+  .douta(rgbw)  // output wire [23 : 0] douta
+);
+always @ (posedge clk) begin
+rgb = rgbw;
+end
+endmodule 
