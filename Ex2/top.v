@@ -32,7 +32,7 @@ module doorbell(
     reg out;
 	
     //Todo: define your logic here
-   always begin 
+   always  begin 
     if(sel)
      #5 out <= b;
     else
