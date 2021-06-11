@@ -29,12 +29,12 @@ module doorbell(
 	
     //Todo: define your logic here
 
-always begin
+always @ (sel) begin
     if (sel) begin
      light = rgb ;
     end
     else begin
-      light = 6'hFFFFFF;
+      light = 24'hFFFFFF;
     end        
 end
 

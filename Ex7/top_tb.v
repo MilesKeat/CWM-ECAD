@@ -30,30 +30,35 @@ clk = 0;
 err = 0;
 enable = 0;
 rst = 1;
+sel = 0;
+button = 1;
+
+#CLK_PERIOD
+#CLK_PERIOD
+#CLK_PERIOD
+#CLK_PERIOD
+
+
+if (!sel) begin
+ if (light != 24'hFFFFFF) begin
+  $display("***TEST FAILED! sel does not work ***");
+           err=1;
+end
+end
 sel = 1;
-
 #CLK_PERIOD
 #CLK_PERIOD
 #CLK_PERIOD
 #CLK_PERIOD
 
-if (rst) begin
+
+if (rst && sel) begin
  if (light != 24'b0) begin
     $display("***TEST FAILED! did not reset correct ***");
            err=1;
 end
 end
-sel = 0;
-#CLK_PERIOD
-#CLK_PERIOD
-#CLK_PERIOD
-#CLK_PERIOD
-
-if (sel) begin
- if (light != 6'hFFFFFF) begin
-  $display("***TEST FAILED! sel does not work ***");
-           err=1;
-end
+forever begin
 end
 end
 doorbell top ( 
@@ -64,6 +69,15 @@ doorbell top (
 .light (light),
 .enable (enable)
 );
+
+
+initial begin 
+ #80
+ if (err == 0)begin
+  $display("***TEST PASSED! :) ***");
+  end
+ $finish;
+end
 
 endmodule
 
