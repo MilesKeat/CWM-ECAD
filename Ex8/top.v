@@ -17,6 +17,10 @@ module top(
     input clk_p,
     input clk_n,
      //Todo: add all other ports besides clk_n and clk_p 
+    input rst_n,
+    input [4:0]temperature, 
+    output heating 
+    output cooling 
    );
     
 
@@ -37,5 +41,38 @@ module top(
       );
 
 //Add logic here
+reg heating;
+reg cooling;
+reg [1:0]state;
+
+initial begin
+
+always @ (posedge clk) begin
+
+state = (heating<<1+cooling);
+if (state == 2'b10) begin
+if (temperature >= 5'b10100) begin
+heating = 0;
+end 
+end
+
+else if (state == 2'b01) begin
+if (temperature <= 5'b10100 ) begin
+cooling = 0 ;
+end
+end 
+else if (state == 2'b00) begin
+if (temperature <= 5'b10010) begin
+heating = 1;
+end
+else if (temperature >= 5'b10110) begin
+cooling = 1;
+end 
+end 
+else if (state == 2'b11) begin
+cooling = 0;
+heating = 0;
+end 
+end
 
 endmodule
