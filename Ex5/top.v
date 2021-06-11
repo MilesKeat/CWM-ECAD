@@ -51,7 +51,7 @@ else if (state == 2'b00) begin
 if (temperature <= 5'b10010) begin
 heating = 1;
 end
-if (temperature >= 5'b10110) begin
+else if (temperature >= 5'b10110) begin
 cooling = 1;
 end 
 end 

@@ -31,7 +31,7 @@ module top_tb(
 initial begin
 err = 0;
 clk = 0;
-temperature = 16;
+temperature = 0;
 sett = 1;
 #CLK_PERIOD
 sett = 0;
@@ -44,11 +44,17 @@ forever begin
  end 
  end 
  if ((temperature >= 20) && (heating_prev ==  1 && cooling_prev == 0 )) begin 
- if ((heating != 0) || (cooling!= 0))begin
+ if (temperature >= 22) begin
+ if ((heating != 0) || (cooling!= 1))begin
+$display("***TEST FAILED! did not switch correct ***");
+           err=1;
+end
+end
+ else if ((heating != 0) || (cooling!= 0)) begin
  $display("***TEST FAILED! did not switch correct ***");
            err=1;
  end
- end 
+end
  if ((temperature <= 18) && ((heating_prev ==  0 && cooling_prev == 0 ))) begin 
  if ((heating != 1) || (cooling!= 0))begin
  $display("***TEST FAILED! did not switch correct ***");
@@ -63,11 +69,11 @@ forever begin
  end 
  
 
- if (temperature < 23) begin
- temperature = temperature + 3;
+ if (temperature < 18) begin
+ temperature = temperature + 9;
  end
  else begin
- temperature = temperature - 6;
+ temperature = temperature - 2;
  end
  heating_prev = heating;
  cooling_prev = cooling;
