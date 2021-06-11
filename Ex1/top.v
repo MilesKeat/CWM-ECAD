@@ -35,7 +35,7 @@ module blinds(
       //Todo: add you logic here
 	//out = func[[a b]]
 
-	 assign out = func[a*2+b];
+	 assign out = func[(a<<1)+b];
 
 	//ab = a*2 + b
 	//out = func[ab]
