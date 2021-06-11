@@ -56,7 +56,7 @@ if (sel) begin
 end
 end
 end
-three_system top ( 
+doorbell top ( 
 .clk (clk),
 .sel (sel),
 .rst (rst),
